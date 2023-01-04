@@ -1,0 +1,40 @@
+package com.example.demo.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.example.demo.dao.RoleDao;
+import com.example.demo.dao.UserDao;
+import com.example.demo.entity.Role;
+import com.example.demo.entity.User;
+
+@Service
+public class UserService {
+	
+	@Autowired
+	private UserDao userDao;
+	
+	@Autowired
+	private RoleDao roleDao;
+	
+	@PostMapping({"/registerNewUser"})
+	public User registerNewUser(@RequestBody User user) {
+		return userDao.save(user);
+	}
+	
+	
+	//This method will help us every time when we initialise our  application
+	//it will automatically insert data to our tables
+	public void initRolesAndUser() {
+		Role adminRole = new Role();
+		adminRole.setRolename("Admin");
+		adminRole.setRoledescription("Admin role");
+		roleDao.save(adminRole);
+		
+		Role userRole = new Role();
+		userRole.setRolename("User");
+		userRole.setRoledescription("Default role for newly created users");
+	}
+}

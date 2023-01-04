@@ -1,0 +1,22 @@
+package com.example.demo.entity;
+
+import java.util.Set;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToMany;
+
+@Entity
+public class User {
+	
+	private String userName;
+	private String userFirstName;
+	private String userLastName;
+	private String userPassword;
+	
+	
+	//This field is used to make connection between user and role table
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<Role> role;
+}
